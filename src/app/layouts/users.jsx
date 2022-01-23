@@ -1,21 +1,23 @@
 import React, { useState, useEffect } from "react";
-import Pagination from "./pagination";
+import Pagination from "../components/pagination";
 import { paginate } from "../utils/paginate";
-import PropTypes from "prop-types";
-import api from "../api";
-import GroupList from "./groupList";
-import SearchStatus from "./searchStatus";
-import UserTable from "./usersTable";
+import api from "../../api";
+import GroupList from "../components/groupList";
+import SearchStatus from "../components/searchStatus";
+import UserTable from "../components/usersTable";
 import _ from "lodash";
 
 const Users = () => {
-    const pageSize = 8;
+    const [users, setUsers] = useState();
     const [currentPage, setCurrenPage] = useState(1);
     const [professions, setProfessions] = useState();
     const [selectedProf, setSelectedProf] = useState();
-    const [sortBy, setSortBy] = useState({ iter: "name", order: "asc" });
-
-    const [users, setUsers] = useState();
+    const [sortBy, setSortBy] = useState({
+        iter: "name",
+        order: "asc",
+        icon: "up"
+    });
+    const pageSize = 4;
 
     useEffect(() => {
         api.users.fetchAll().then((data) => {
@@ -127,10 +129,6 @@ const Users = () => {
         );
     }
     return "Loading...";
-};
-
-Users.propTypes = {
-    users: PropTypes.arrayOf(PropTypes.object)
 };
 
 export default Users;
